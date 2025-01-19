@@ -10,7 +10,7 @@ def new_request(req):
             service_request = form.save(commit=False)
             service_request.user = req.user
             service_request.save()
-            return redirect('trace_request', reference_id=service_request.reference_id)
+            return redirect('trace_request/', reference_id=service_request.reference_id)
     else:
         form = forms.ServiceRequestForm()
     return render(req, 'service/newService.html', {'form': form})
