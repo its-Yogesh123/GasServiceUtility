@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Service </title>
+</head>
+<body>
+    <h1>Welcome {{user}}</h1>
+    <form method="GET">
+        <input formaction="/service/new_request" type="submit" value="Raise New Request">
+        <input formaction="/service/trace_request" type="submit" value="Trace Request">
+        <input formaction="/support/manage_all" type="submit" value="Hadle Requests">
+    </form>
+    {% if user.is_authenticated %}
+    <form action="logout/" method="POST">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    {% endif %}
+    {% include "partials.html" %}
+</body>
+</html>

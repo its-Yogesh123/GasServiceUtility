@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Requests Portal </title>
+</head>
+<body>
+    {% include "../partials.html" %}
+    <h1>{{request.reference_id}} - {{request.user}}</h1>
+    <h3> Service Type is {{request.service_type}}</h3>
+    <h3> Id {{request.id}}</h3>
+    <h5>Request Raised at {{request.created_at}}</h5>
+    <h5>Last  Updated at {{request.updated_at}}</h5>
+    <h5>Current Status : {{request.status}}</h5>
+    <p>Description  {{request.description}}</p>
+    {% if request.attached_file %}
+    <img src="{{ request.attached_file.url }}" alt="Service Attachment" width="200" />
+    {% else %}
+    <p>No attachment available</p>
+    {% endif %}
+    <h1>Update Status for Request {{ request.reference_id }}</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="status">Status:</label>
+    <select id="status" name="status">
+        <option value="Pending" {% if request.status == "Pending" %}selected{% endif %}>Pending</option>
+        <option value="In Progress" {% if request.status == "In Progress" %}selected{% endif %}>In Progress</option>
+        <option value="Completed" {% if request.status == "Completed" %}selected{% endif %}>Completed</option>
+    </select>
+    <button type="submit">Update</button>
+</form>
+
+</body>
+</html>

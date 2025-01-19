@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requests Portal </title>
+    <style>
+        table,thead,tr,th,tbody,td{
+            border: 1px solid black; 
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    {% include "../partials.html" %}
+    <h1>All Service Requests</h1>
+    <table >
+        <thead >
+            <tr>
+                <th >Reference ID</th>
+                <th>Username</th>
+                <th>Service Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in all_service_requests %}
+            <tr>
+                <td><a href="/support/update_request/{{request.reference_id}}">{{request.reference_id}}</a></td>
+                <td>{{request.user}}</td>
+                <td>{{request.service_type}}</td>
+                <td 
+                {% if request.status == "pending" %}
+                    style="color: blue;"
+                {% elif request.status == "In Progress" %}
+                    style="color: red;"
+                {% elif request.status == "Completed" %}
+                    style="color: green;"
+                {% else %}
+                    style="color: black;"
+                {% endif %}
+            >
+                {{ request.status }}
+            </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

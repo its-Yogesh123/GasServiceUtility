@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracing Request </title>
+    <style>
+        table,thead,tr,th,tbody,td{
+            border: 1px solid black; 
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    {% include "../partials.html" %}
+    <h1>Details for {{user}}</h1>
+    <table >
+        <thead >
+            <tr>
+                <th >Reference ID</th>
+                <th>Service Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in request %}
+            <tr>
+                <td><a href="/service/trace_request/{{r.reference_id}}">{{r.reference_id}}</a></td>
+                <td>{{r.service_type}}</td>
+                <td 
+            {% if r.status == "pending" %}
+                style="color: blue;"
+            {% elif r.status == "Completed" %}
+                style="color: green;"
+            {% elif r.status == "In Progress" %}
+                style="color: red;"
+            {% endif %}
+        >
+            {{ r.status }}
+        </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    {% if one_request %}
+    <h1>{{request.reference_id}}</h1>
+    <h3> Service Type is {{one_request.service_type}}</h3>
+    <h5>Request Raised at {{one_request.created_at}}</h5>
+    <h5>Last  Updated at {{one_request.updated_at}}</h5>
+    <h5>Current Status : {{one_request.status}}</h5>
+    <h5>Current Status : {{one_request.status}}</h5>
+    <p>Description  : {{one_request.description}}</p>
+    {% if one_request.attached_file %}
+
+    <img src="{{ one_request.attached_file.url }}" alt="Service Attachment" width="200" />
+    {% else %}
+    <p style="color: red;">No attachment available</p>
+    {% endif %}
+    {% endif %}
+
+</body>
+</html>
